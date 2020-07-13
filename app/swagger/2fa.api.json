@@ -1,0 +1,63 @@
+{
+    "routes": {
+        "/two-factor/request/{number}": {
+            "get": {
+                "tags": ["2 Factor Authentication"],
+                "summary": "request code for 2FA",
+                "parameters": [
+                    {    "in": "path",
+                        "name": "number",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            }
+        },
+        "/two-factor/{number}/verify/{code}": {
+            "get": {
+                "tags": ["2 Factor Authentication"],
+                "summary": "code verification.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "number",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "code",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            }
+        }
+           
+    }
+}

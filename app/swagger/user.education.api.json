@@ -1,0 +1,391 @@
+{
+    "routes": {
+        "/education": {
+            "post": {
+                "tags": ["Education"],
+                "summary": "Insert list of education.",
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "list of education you want to insert.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addEducation"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully inserted educations.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/education"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "get": {
+                "summary": "retreive education list.",
+                "tags": ["Education"],
+                "security": [ { "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "successfully retreived educations.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/education"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Edit education entry",
+                "tags": ["Education"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "education you want to edit.",
+                        "schema": {
+                            "$ref": "#/definitions/education"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retreived educations.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                           "$ref": "#/definitions/education"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/education/{id}": {
+            "get": {
+                "summary": "get education details by id.",
+                "tags": ["Education"],
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retreived education.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/education"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete education record by id.",
+                "tags": ["Education"],
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "id of education you want to remove.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deleted education record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/education/public/{username}": {
+            "get": {
+                "tags":["Education"],
+                "summary": "fetch all education records of user.",
+                "parameters":[
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "user name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully fetch all educations.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/education"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/education/swap": {
+            "post": {
+                "tags": ["Education"],
+                "security": [{"bearerAuth":[]}],
+                "summary": "swap order",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/state"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/education/{id}/toggleprotect": {
+            "get": {
+                "tags": ["Education"],
+                "summary": "toggle proctect unproctect data.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "addEducation": {
+            "properties": {
+                "institutionName": {
+                    "type": "string"
+                },
+                "dateStarted": {
+                    "type": "string"
+                },
+                "dateFinished": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                }
+            }
+        },
+        "education": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "institutionName": {
+                    "type": "string"
+                },
+                "dateStarted": {
+                    "type": "string"
+                },
+                "dateFinished": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "dateCreated": {
+                            "type": "string"
+                        },
+                        "dateUpdated": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "routes": {
+        "/invoices": {
+            "get": {
+                "tags": ["invoices"],
+                "summary": "retrieve all invoices",
+                "security": [{"bearerAuth":[]}],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/invoice"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "invoice": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "amountDue": {
+                    "type": "number"
+                },
+                "amountPaid": {
+                    "type": "number"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer_name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "invoice_pdf": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

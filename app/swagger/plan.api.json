@@ -1,0 +1,22 @@
+{
+    "routes": {
+        "/plan": {
+            "get": {
+                "tags": ["Plan"],
+                "summary": "fetch all premium plans.",
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "successfull fetch plans.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

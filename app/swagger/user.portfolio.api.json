@@ -1,0 +1,388 @@
+{
+    "routes": {
+        "/portfolio": {
+            "post": {
+                "tags": ["Portfolio"],
+                "summary": "create a portfolio record.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "portfolio you want to create.",
+                        "schema": {
+                            "$ref": "#/definitions/addPortfolio"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/portfolio"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Portfolio"],
+                "summary": "retrieve all user portfolio.",
+                "security": [{"bearerAuth":[]}],
+                "responses": {
+                    "200": {
+                        "description": "successfully created portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/portfolio"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Portfolio"],
+                "summary": "update portfolio record.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "portfolio record you want to update.",
+                        "schema": {
+                            "$ref": "#/definitions/portfolio"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully updated portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/portfolio"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/portfolio/{id}": {
+            "get": {
+                "tags": ["Portfolio"],
+                "summary": "get portfolio details.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "portfolio id you want to retrieve.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/portfolio"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Portfolio"],
+                "summary": "delete record by id.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "portfolio id you want to retrieve.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deleted portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/portfolio/public/{username}": {
+            "get": {
+                "tags": ["Portfolio"],
+                "summary": "fetch all portfolio of user by user id.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "user name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created portfolio.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/portfolio"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/portfolio/swap": {
+            "post": {
+                "tags": ["Portfolio"],
+                "security": [{"bearerAuth":[]}],
+                "summary": "swap order",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/state"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/portfolio/{id}/toggleprotect": {
+            "get": {
+                "tags": ["Portfolio"],
+                "summary": "toggle proctect unproctect data.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "addPortfolio": {
+            "properties": {
+                "itemName": {
+                    "type": "string"
+                },
+                "itemDescription": {
+                    "type": "string"
+                },
+                "itemImageUrl": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "portfolio": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "itemName": {
+                    "type": "string"
+                },
+                "itemDescription": {
+                    "type": "string"
+                },
+                "itemImageUrl": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "dateCreated": {
+                            "type": "string"
+                        },
+                        "dateUpdated": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

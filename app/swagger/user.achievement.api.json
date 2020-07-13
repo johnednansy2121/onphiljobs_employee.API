@@ -1,0 +1,419 @@
+{
+    "routes": {
+        "/achievements" : {
+            "post": {
+                "tags": [
+                    "Achievements"
+                ],
+                "summary": "create multiple achievement records.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "achievement records to create.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/addAchievement"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/achievement"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Achievements"],
+                "summary": "update achievement record.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "achievement record you want to update.",
+                        "schema": {
+                            "$ref": "#/definitions/achievement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully updated achievement record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/achievement"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Achievements"],
+                "summary": "get list of achievement records.",
+                "security": [{"bearerAuth":[]}],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/achievement"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/achievements/{id}": {
+            "get": {
+                "tags": ["Achievements"],
+                "summary": "get achievement record by id.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "id of achievement record you want to get.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve achievement record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/achievement"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Achievements"],
+                "summary": "delete achievement record by id.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "id of achievement record you want to delete.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deleted achievement record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/achievements/public/{username}": {
+            "get": {
+                "tags": ["Achievements"],
+                "summary": "display achievements of user to public",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "user name you want to get achievements.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/achievement"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/achievements/swap": {
+            "post": {
+                "tags": ["Achievements"],
+                "security": [{"bearerAuth":[]}],
+                "summary": "swap order",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/state"
+                            }
+                            
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created achievement records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/achievements/{id}/toggleprotect": {
+            "get": {
+                "tags": ["Achievements"],
+                "summary": "toggle proctect unproctect data.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in":"path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "addAchievement": {
+            "properties": {
+                "achievementName": {
+                    "type": "string"
+                },
+                "achievementDescription": {
+                    "type": "string"
+                },
+                "dateStarted": {
+                    "type": "string"
+                },
+                "dateFinished": {
+                    "type": "string"
+                }
+            }
+        },
+        "achievement": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "achievementName": {
+                    "type": "string"
+                },
+                "achievementDescription": {
+                    "type": "string"
+                },
+                "dateStarted": {
+                    "type": "string"
+                },
+                "dateFinished": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "dateCreated": {
+                            "type": "string"
+                        },
+                        "dateFinished": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "state": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "number"
+                }
+            }
+        },
+        "swap_order": {
+            "properties": {
+                "prevState": {
+                    "$ref": "#/definitions/state"
+                },
+                "nextState": {
+                    "$ref": "#/definitions/state"
+                }
+            }
+        }
+    }
+}

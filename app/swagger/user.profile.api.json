@@ -1,0 +1,253 @@
+{
+    "routes": {
+        "/profile": {
+            "get": {
+                "tags": ["user profile"],
+                "summary": "get user profile.",
+                "security": [ { "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieve user profile.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/profile"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["user profile"],
+                "summary": "create user profile.",
+                "security": [{ "bearerAuth": [] }],
+                "consumes": [
+                    "multipart/from-data"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user profile you want to create.",
+                        "schema": {
+                            "$ref": "#/definitions/createProfile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully created user profile.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/profile"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["user profile"],
+                "summary": "update user profile.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user profile you want to update.",
+                        "schema": {
+                            "$ref": "#/definitions/profile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated user profile.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/profile"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            }
+        },
+        "/profile/{name}": {
+            "get": {
+                "tags": ["user profile"],
+                "summary": "retreive user profile by user name.",
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "description": "user name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retreive user profile.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/profile"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "profile": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                },
+                "firsName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "displayPicture": {
+                    "type": "string"
+                },
+                "aboutMe": {
+                    "type": "string"
+                },
+                "videoUrl": {
+                    "type": "string"
+                },
+                "socialLinks": {
+                    "type": "object",
+                    "properties": {
+                        "facebook": {
+                            "type": "string"
+                        },
+                        "instagram": {
+                            "type": "string"
+                        },
+                        "twitter": {
+                            "type": "string"
+                        },
+                        "linkedin": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "dateCreated": {
+                            "type": "string"
+                        },
+                        "dateUpdated": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "createProfile": {
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "aboutMe": {
+                    "type": "string"
+                },
+                "displayPicture": {
+                    "type": "string"
+                },
+                "videoUrl": {
+                    "type": "string"
+                },
+                "socialLinks": {
+                    "type": "object",
+                    "properties": {
+                        "facebook": {
+                            "type": "string"
+                        },
+                        "instagram": {
+                            "type": "string"
+                        },
+                        "twitter": {
+                            "type": "string"
+                        },
+                        "linkedin": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

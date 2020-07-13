@@ -1,0 +1,215 @@
+{
+    "routes": {
+        "/paymentmethod": {
+            "post": {
+                "tags": ["Payment Method"],
+                "summary": "create payment method.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "payment method model",
+                        "schema": {
+                            "$ref": "#/definitions/addPaymentMethod"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/paymentMethod"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Payment Method"],
+                "summary": "create payment method.",
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/paymentMethod"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Payment Method"],
+                "summary": "update payment method.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/update_payment_method"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/paymentMethod"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "addPaymentMethod": {
+            "properties": {
+                "accountName": {
+                    "type": "string"
+                },
+                "cardNumber": {
+                    "type": "string"
+                },
+                "expiryMonth": {
+                    "type": "string"
+                },
+                "expiryYear": {
+                    "type": "string"
+                },
+                "cvc": {
+                    "type": "string"
+                },
+                "address1": {
+                    "type": "string"
+                },
+                "address2": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "paymentMethod": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "last4digit": {
+                    "type": "string"
+                },
+                "cardType": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "dateCreated": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "update_payment_method": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "accountName": {
+                    "type": "string"
+                },
+                "cardNumber": {
+                    "type": "string"
+                },
+                "expiryMonth": {
+                    "type": "string"
+                },
+                "expiryYear": {
+                    "type": "string"
+                },
+                "cvc": {
+                    "type": "string"
+                },
+                "address1": {
+                    "type": "string"
+                },
+                "address2": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

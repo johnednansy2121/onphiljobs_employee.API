@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+        body {
+        font-family: 'Montserrat';
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        height: 100vh;
+        width: 100%;
+        }
+
+        body #main {
+        width: 80%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        padding: 20px;
+        }
+
+        body #main #header {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        }
+
+        body #main .details .row {
+        padding-top: 10px;
+        }
+
+        body #main .details .details-div {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: 20% 30%;
+            grid-template-columns: 20% 30%;
+        }
+
+        body #main .details .details-div .value {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>You Have New Premium User</h1>
+        </div>
+        <div class="details">
+            <div class="row">
+                <h4>User Details</h4>
+            </div>
+            <div class="details-div">
+                <div class="label">
+                    <h5>Full Name:</h5>
+                </div>
+                <div class="value">
+                    {{fullName}}
+                </div>
+                <div class="label">
+                    <h5>Email Address:</h5>
+                </div>
+                <div class="value">
+                    {{email}}
+                </div>
+                <div class="label">
+                    <h5>Job Title</h5>
+                </div>
+                <div class="value">
+                    {{jobTitle}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

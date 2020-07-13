@@ -1,0 +1,33 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo install phase
+      - echo Building for ENV ${ENVIRONMENT}
+#      - echo ${MONGODB_URL}
+#      - echo ${JWT_KEY}
+#      - echo ${ECR_REPO_LOCATION}
+  pre_build:
+    commands:
+     - echo pre build phase
+  build:
+    commands:
+      - echo build phase
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPO_LOCATION}
+      - docker build . -t ${ECR_REPO_LOCATION}:latest
+  post_build:
+    commands:
+      - echo post build phase
+      - docker push ${ECR_REPO_LOCATION}:latest
+      - printf '[{"name":"%s","imageUri":"%s"}]' ${ECR_REPO_NAME} ${ECR_REPO_LOCATION}:latest > imagedefinitions.json
+      - cat imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
+#    - '**/*'
+#  #  name: $(date +%Y-%m-%d)
+#  #  discard-paths: yes
+#  base-directory: dist/MyEmployeeLife
+#  #cache:
+#  #paths:
+#  # - paths

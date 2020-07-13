@@ -1,0 +1,96 @@
+{
+    "routes": {
+        "/wordpress/getposts": {
+            "get": {
+                "tags": ["Wordpress"],
+                "summary": "get wordpress feed.",
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successfully get wordpress feed."
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/wordpress/getpost/{id}": {
+            "get": {
+                "tags": ["Wordpress"],
+                "summary": "get wordpress post by id.",
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully got wordpress post."
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/wordpress/categories": {
+            "get": {
+                "tags": ["Wordpress"],
+                "summary": "get wordpress categories.",
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successfully get wordpress categories."
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "wpposts": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "created": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

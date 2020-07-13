@@ -1,0 +1,198 @@
+{
+    "routes": {
+        "/diary/listall": {
+            "get": {
+                "tags": ["Diary"],
+                "summary": "get user diaries.",
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successfully retreive user diaries.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/diary"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/diary": {
+            "post": {
+                "tags": ["Diary"],
+                "summary": "create diary.",
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "dairy entry you want to add.",
+                        "schema": {
+                            "$ref": "#/definitions/addDiary"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "descritption": "successfully added diary entry.",
+                        "schema": {
+                            "$ref": "#/definitions/diary"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Diary"],
+                "summary": "update diary",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "update diary details.",
+                        "schema": {
+                            "$ref": "#/definitions/diary"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "descritption": "successfully updated diary entry.",
+                        "schema": {
+                            "$ref": "#/definitions/diary"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/diary/{id}": {
+            "get": {
+                "tags": ["Diary"],
+                "summary": "get diary details.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "diary id.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "descritption": "successfully added diary entry.",
+                        "schema": {
+                            "$ref": "#/definitions/diary"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Diary"],
+                "summary": "delete diary record.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "diary id.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "descritption": "successfully deleted diary entry.",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "diary": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "created": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "addDiary": {
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

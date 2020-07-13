@@ -1,0 +1,320 @@
+{
+    "routes": {
+        "/tasks": {
+            "post": {
+                "tags": ["Tasks"],
+                "summary": "create task record.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "task record you want to create.",
+                        "schema": {
+                            "$ref": "#/definitions/addTask"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully created task record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/task"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Tasks"],
+                "summary": "retrieve records of task.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "tags",
+                        "description": "tags of task you want to retreive.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "description": "sort by",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve task records.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/task"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Tasks"],
+                "summary": "update task record.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "task record you want to update.",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully updated task record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/task"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "tags": ["Tasks"],
+                "summary": "retrieve task details by id.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "id you want to retrieve."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve task record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/task"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Tasks"],
+                "summary": "delete task record by id.",
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "task record id you want to delete.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deleted task record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                           "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        },
+        "/tasks/markAsCompleteIncomplete/{id}": {
+            "get": {
+                "tags": ["Tasks"],
+                "summary": "mark complete or incomplete task by id.",
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "id you want to mark as complete/incomplete.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully updated task record.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "403": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "addTask": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "dueDate": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "task": {
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "dueDate": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "isCompleted": {
+                    "type": "boolean"
+                },
+               "metadata": {
+                    "type": "object",
+                    "properties": {
+                        "owner": {
+                            "type": "string"
+                        },
+                        "dateCreated": {
+                            "type": "string"
+                        },
+                        "dateUpdated": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

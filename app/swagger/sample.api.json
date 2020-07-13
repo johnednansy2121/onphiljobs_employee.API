@@ -1,0 +1,99 @@
+{
+    "routes": {
+        "/sample": {
+            "get": {
+                "tags": ["sample"],
+                "summary": "get samples stored in memory.",
+                "security":[ { "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "successfully retrieve samples.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/sample"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "sample"
+                ],
+                "summary": "create another sample to the list in memory.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "sample you want to add.",
+                        "schema": {
+                            "$ref": "#/definitions/sample"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully added sample to the list.",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "$ref": "#/definitions/sample"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/BAD_REQUEST"
+                    },
+                    "401": {
+                        "$ref": "#/components/UNAUTHORIZED"
+                    }
+                }
+            }
+        }
+    },
+    "models": {
+        "sample": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

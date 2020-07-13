@@ -1,0 +1,39 @@
+{
+    "routes": {
+        "/files/displayPhoto": {
+            "post": {
+                "tags": [ "files" ],
+                "summary": "Upload a display Photo",
+                "consumes": ["multipart/form-data"],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "displayPhoto",
+                        "type": "file",
+                        "description": "File you want to upload."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully uploaded a displayPhoto",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/baseResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "model": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

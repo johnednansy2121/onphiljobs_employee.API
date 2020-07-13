@@ -1,0 +1,60 @@
+{
+    "routes": {
+        "/application": {
+            "get": {
+                "tags": ["application"],
+                "summary": "get all application",
+                "security": [ { "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "$orderBy",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "$pageSize",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "$pageNum",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+        "/application/{id}/withdraw": {
+            "put": {
+                "tags": ["application"],
+                "summary": "withdraw application",
+                "security": [ {"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        }
+    }
+}
