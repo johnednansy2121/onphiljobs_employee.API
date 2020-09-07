@@ -23,4 +23,4 @@ const forgotPasswordSchema = new Schema({
     }
 })
 
-module.exports = ForgotPasswordModel = fllairdb.model('forgotpassword', forgotPasswordSchema)
+module.exports = ForgotPasswordModel = onphdb.model('forgotpassword', forgotPasswordSchema)

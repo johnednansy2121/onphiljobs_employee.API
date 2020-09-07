@@ -19,4 +19,4 @@ const diarySchema = new Schema({
 
 });
 
-module.exports = DiaryModel = fllairdb.model('dairy', diarySchema);
+module.exports = DiaryModel = onphdb.model('dairy', diarySchema);

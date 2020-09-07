@@ -24,4 +24,4 @@ const subscriptionSchema = new Schema({
     }
 })
 
-module.exports = SubscriptionModel = fllairdb.model('subscription', subscriptionSchema)
+module.exports = SubscriptionModel = onphdb.model('subscription', subscriptionSchema)

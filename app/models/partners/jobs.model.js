@@ -143,4 +143,4 @@ const JobSchema = new Schema({
 })
 
 
-module.exports = JobModel = partnersdb.model('job', JobSchema)
+module.exports = JobModel = onphpartnersdb.model('job', JobSchema)

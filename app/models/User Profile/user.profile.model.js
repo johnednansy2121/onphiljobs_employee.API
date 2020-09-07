@@ -67,4 +67,4 @@ const userProfileSchema = new Schema({
     }
 })
 
-module.exports = UserProfileModel = fllairdb.model('user.profile', userProfileSchema)
+module.exports = UserProfileModel = onphdb.model('user.profile', userProfileSchema)

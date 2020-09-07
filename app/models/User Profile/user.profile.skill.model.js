@@ -30,4 +30,4 @@ const userProfileSkillSchema = new Schema({
     }
 });
 
-module.exports = UserProfileSkillModel = fllairdb.model('user.skill', userProfileSkillSchema)
+module.exports = UserProfileSkillModel = onphdb.model('user.skill', userProfileSkillSchema)
