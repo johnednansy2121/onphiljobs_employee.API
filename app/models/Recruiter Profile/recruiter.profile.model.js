@@ -39,12 +39,7 @@ const recruiterProfileSchema = new Schema({
         type: String
     },
     //Verification Status
-    premium : {
-        interviewDate: {type: Date},                                //When was the interview conducted
-
-        isProfileVerified: {type: Boolean, default: false},         //(Unused) Have our consultants verified the claims this recruiter makes
-    },
-
+    
     //Recruiter Metadata
     metadata: {
         dateCreated: {type: Date},
