@@ -12,12 +12,12 @@ encryptPassword = (password) => {
     })
 }
 
-comparePassword = (password, user) => {
+comparePassword = (password, recruiter) => {
     return new Promise((resolve, reject) => {
-        bcrypt.compare(password, user.password)
+        bcrypt.compare(password, recruiter.password)
             .then(res => {
                 if(res)
-                    resolve(user)
+                    resolve(recruiter)
                 else
                     reject({ message: 'invalid credentials'})
             }).catch(err => {
@@ -26,9 +26,9 @@ comparePassword = (password, user) => {
     })
 }
 
-generateToken = (user) => {
+generateToken = (recruiter) => {
     return new Promise((resolve, reject) => {
-        jwt.sign({ email: user.email }, Configuration.JWT_KEY, { expiresIn: '1d' }, (error, token) => {
+        jwt.sign({ email: recruiter.email }, Configuration.JWT_KEY, { expiresIn: '1d' }, (error, token) => {
             if(error)
                 reject(error)
             resolve(token)
@@ -36,39 +36,39 @@ generateToken = (user) => {
     })
 }
 
-verifyUser = (user) => {
+verifyRecruiter = (recruiter) => {
     return new Promise((resolve, reject) => {
-        UserModel.updateOne({ _id: user._id }, {
+        RecruiterModel.updateOne({ _id: recruiter._id }, {
             $set: {
                 isVerified: true,
                 metadata: {
-                    ...user.metadata,
+                    ...recruiter.metadata,
                     dateUpdated: new Date()
                 }
             }
         })
-        .then(result => resolve(user))
+        .then(result => resolve(recruiter))
         .catch(error => reject({ message: error.message }))
     })
 }
 
 
 
-module.exports = UserService = {
+module.exports = RecruiterService = {
     signup: (data) => {
         return new Promise((resolve, reject) => {
-            const { email, password, confirmPassword, userName, tag, phone, on2FA } = data
+            const { email, password, confirmPassword, recruiterName, tag, phone, on2FA } = data
             if(on2FA) {
                 if(phone === '' || phone === undefined) reject({ message: 'If 2-FA is on, mobile number is required.' })
             }
 
-            if(userName.includes(' ')) reject({ message: 'user name must not have whitespace.'})
+            if(recruiterName.includes(' ')) reject({ message: 'recruiter name must not have whitespace.'})
             if(!regex.email.test(email)) reject({ message: 'Email is not valid' })
             if(password != confirmPassword)
                 reject(`Password and Confirm Password doesn't match.`)
 
             encryptPassword(password)
-                .then(encryptedPassword => { return UserModel.create({ email: email.toLowerCase(), userName: userName.toLowerCase(), password: encryptedPassword, registrationTag: tag, phone, on2FA, metadata: { verificationToken: uuid.v4(), dateCreated: new Date() } })})
+                .then(encryptedPassword => { return RecruiterModel.create({ email: email.toLowerCase(), recruiterName: recruiterName.toLowerCase(), password: encryptedPassword, registrationTag: tag, phone, on2FA, metadata: { verificationToken: uuid.v4(), dateCreated: new Date() } })})
                 .then(data =>{
 
                     EmailHelper.sendEmail('email.verification.template', { link: Configuration.CLIENT_URL + `/auth/verify/${data.metadata.verificationToken}`},{
@@ -85,25 +85,25 @@ module.exports = UserService = {
     login: (data) => {
         return new Promise((resolve, reject) => {
             try {
-                const { userName, password } = data
-                let userDetails
-                UserModel.findOne({ $or: [{ email: userName.toLowerCase() }, { userName: userName.toLowerCase() }]})
+                const { recruiterName, password } = data
+                let recruiterDetails
+                RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: recruiterName.toLowerCase() }]})
                     .then(data => {
-                        userDetails = data
+                        recruiterDetails = data
                         if (!data) reject({ message: 'invalid credentials'})
                         if (!data.isVerified) reject({ message: 'email is not verified.'})
                         return comparePassword(password, data)
                     })
-                    .then(user => { 
-                        if(userDetails.on2FA) {
-                            twoFAService.generate2FACode(userDetails.phone, userDetails.email).then(() => {
+                    .then(recruiter => { 
+                        if(recruiterDetails.on2FA) {
+                            twoFAService.generate2FACode(recruiterDetails.phone, recruiterDetails.email).then(() => {
                                 resolve({ on2FA : true })
                             })
                         } else
-                            return generateToken(user) 
+                            return generateToken(recruiter) 
                     })
                     .then(token => {
-                        if(userDetails.on2FA) {
+                        if(recruiterDetails.on2FA) {
                             resolve({ on2FA : true })
                         } else
                             resolve({on2FA: false, token})
@@ -117,13 +117,13 @@ module.exports = UserService = {
     },
     verify: (code) => {
         return new Promise((resolve, reject) => {
-            UserModel.findOne({ 'metadata.verificationToken': code })
-                .then(user => {
-                    if(!user) reject({ message: 'code is invalid.'})
-                    return verifyUser(user)
+            RecruiterModel.findOne({ 'metadata.verificationToken': code })
+                .then(recruiter => {
+                    if(!recruiter) reject({ message: 'code is invalid.'})
+                    return verifyRecruiter(recruiter)
                 })
-                .then(user => {
-                    return generateToken(user)
+                .then(recruiter => {
+                    return generateToken(recruiter)
                 })
                 .then(token => {
                     resolve(token)
@@ -131,19 +131,19 @@ module.exports = UserService = {
                 .catch(error => reject({ message: error.message }))
         })
     },
-    getUserById: (id) => {
+    getRecruiterById: (id) => {
         return new Promise((resolve, reject) => {
-            UserModel.findById(id)
-                .then(user => {
-                    if(!user) reject({ message: 'user not found.'})
-                    resolve(user)
+            RecruiterModel.findById(id)
+                .then(recruiter => {
+                    if(!recruiter) reject({ message: 'recruiter not found.'})
+                    resolve(recruiter)
                 })
                 .catch(error => reject({ message: error.message }))
         })
     },
-    twoFALogin: async({ userName, code}) => {
+    twoFALogin: async({ recruiterName, code}) => {
         try {
-            const searchVerificationCodeResult = await twoFactorModel.find({ number: userName, code }).sort({ 'metadata.dateCreated': -1 })
+            const searchVerificationCodeResult = await twoFactorModel.find({ number: recruiterName, code }).sort({ 'metadata.dateCreated': -1 })
 
             if(searchVerificationCodeResult.length <= 0) throw new Error('Invalid code.')
 
@@ -158,10 +158,10 @@ module.exports = UserService = {
             if(delta === -1) throw new Error('Code is expired')
 
             else {
-                const user = await UserModel.findOne({ $or: [{ email: userName.toLowerCase() }, { userName: userName.toLowerCase() }]})
-                if(!user) throw new Error('Invalid Code')
+                const recruiter = await RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: recruiterName.toLowerCase() }]})
+                if(!recruiter) throw new Error('Invalid Code')
 
-                const token =  await generateToken(user)
+                const token =  await generateToken(recruiter)
 
                 return { token }
             }
@@ -172,19 +172,19 @@ module.exports = UserService = {
     },
     get2FASettings: async({ _id }) => {
         try {   
-            const userDetails = await UserModel.findOne({ _id })
+            const recruiterDetails = await RecruiterModel.findOne({ _id })
 
-            if(!userDetails) throw new Error('Cannot fetch user 2 FA settings.')
+            if(!recruiterDetails) throw new Error('Cannot fetch recruiter 2 FA settings.')
 
-            return { on2FA: userDetails.on2FA, phone: userDetails.phone }
+            return { on2FA: recruiterDetails.on2FA, phone: recruiterDetails.phone }
 
         } catch(err) {
             throw new Error(err.message)
         }
     },
-    change2FASettings: async({ phone, on2FA }, user) => {
+    change2FASettings: async({ phone, on2FA }, recruiter) => {
         try {
-            const updateRes = await UserModel.update({ _id: user._id }, {
+            const updateRes = await RecruiterModel.update({ _id: recruiter._id }, {
                 $set: {
                     phone,
                     on2FA
