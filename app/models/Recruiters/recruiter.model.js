@@ -6,7 +6,7 @@ const recruiterSchema = new Schema({
         required: (true, 'Email is required.'),
         unique: (true, 'Email already exists.')
     },
-    userName: {
+    recruiterName: {
         type: String,
         required: (true, 'User name is required.'),
         unique: (true, 'User name is already taken.')

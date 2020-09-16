@@ -23,13 +23,13 @@ module.exports = function(){
 
     this.post(baseRoute + '/signup-recruiter', ValidatorRequest.validateRequest(signUpSchema), (req, res) => {
         return new Promise((resolve, reject) => {
-            console.log(req.body)
+            console.log("accepted",req.body)
             const tag  = req.query.tag ? req.query.tag : ''
             RecruiterService.signup({ ...req.body, tag })
                 .then(data => resolve(
                     res.json(Response.Success.Custom('successfully signed up recruiter.', data
                     ))))
-                .catch(error => reject(Response.Error.Custom(res, error.message)))
+                .catch(error => {console.log("failed");reject(Response.Error.Custom(res, error.message))})
         })
     })
 
