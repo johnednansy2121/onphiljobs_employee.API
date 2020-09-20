@@ -52,21 +52,18 @@ verifyRecruiter = (recruiter) => {
     })
 }
 
-
-
 module.exports = RecruiterService = {
     signup: (data) => {
         return new Promise((resolve, reject) => {
-            const { email, password, confirmPassword, recruiterName, tag, phone, on2FA } = data
+            const { email, password, confirmPassword, userName, tag, phone, on2FA } = data
             if(on2FA) {
                 if(phone === '' || phone === undefined) reject({ message: 'If 2-FA is on, mobile number is required.' })
             }
-
+            var recruiterName = userName;
             if(recruiterName.includes(' ')) reject({ message: 'recruiter name must not have whitespace.'})
             if(!regex.email.test(email)) reject({ message: 'Email is not valid' })
             if(password != confirmPassword)
                 reject(`Password and Confirm Password doesn't match.`)
-
             encryptPassword(password)
                 .then(encryptedPassword => { return RecruiterModel.create({ email: email.toLowerCase(), recruiterName: recruiterName.toLowerCase(), password: encryptedPassword, registrationTag: tag, phone, on2FA, metadata: { verificationToken: uuid.v4(), dateCreated: new Date() } })})
                 .then(data =>{
@@ -85,9 +82,10 @@ module.exports = RecruiterService = {
     login: (data) => {
         return new Promise((resolve, reject) => {
             try {
-                const { recruiterName, password } = data
+                const { userName, password } = data
+                var recruiterName = userName;
                 let recruiterDetails
-                RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: recruiterName.toLowerCase() }]})
+                RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: userName.toLowerCase() }]})
                     .then(data => {
                         recruiterDetails = data
                         if (!data) reject({ message: 'invalid credentials'})
@@ -190,7 +188,6 @@ module.exports = RecruiterService = {
                     on2FA
                 }
             })
-
             return true
         } catch(err) {
             throw new Error(err.message)
