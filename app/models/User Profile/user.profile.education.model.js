@@ -29,4 +29,4 @@ const userProfileEducationSchema = new Schema({
 
 })
 
-module.exports = UserEducationModel = fllairdb.model('user.education', userProfileEducationSchema)
+module.exports = UserEducationModel = onphdb.model('user.education', userProfileEducationSchema)

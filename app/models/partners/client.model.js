@@ -25,4 +25,4 @@ const ClientSchema = new Schema({
     }
 })
 
-module.exports = ClientModel = partnersdb.model('client', ClientSchema)
+module.exports = ClientModel = onphpartnersdb.model('client', ClientSchema)

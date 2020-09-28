@@ -23,4 +23,4 @@ const paymentMethodSchema = Schema({
     }
 })
 
-module.exports = PaymentMethodModel = fllairdb.model('paymentmethod', paymentMethodSchema)
+module.exports = PaymentMethodModel = onphdb.model('paymentmethod', paymentMethodSchema)

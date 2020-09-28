@@ -18,4 +18,4 @@ const OrganizationSchema = new Schema({
     ]
 })
 
-module.exports = OrganizationModel = partnersdb.model('organization', OrganizationSchema)
+module.exports = OrganizationModel = onphpartnersdb.model('organization', OrganizationSchema)

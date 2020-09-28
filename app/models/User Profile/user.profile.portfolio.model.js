@@ -25,4 +25,4 @@ const userProfilePortfolioSchema = new Schema({
     }
 });
 
-module.exports = UserProfilePortfolioModel = fllairdb.model('user.portfolio', userProfilePortfolioSchema)
+module.exports = UserProfilePortfolioModel = onphdb.model('user.portfolio', userProfilePortfolioSchema)

@@ -18,4 +18,4 @@ const twoFactorSchema = new Schema({
     }
 })
 
-module.exports = twoFactorModel = fllairdb.model('twoFactor', twoFactorSchema)
+module.exports = twoFactorModel = onphdb.model('twoFactor', twoFactorSchema)

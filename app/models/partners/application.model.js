@@ -26,4 +26,4 @@ const ApplicationSchema = new Schema({
     }
 })
 
-module.exports = ApplicationModel = partnersdb.model('application', ApplicationSchema)
+module.exports = ApplicationModel = onphpartnersdb.model('application', ApplicationSchema)

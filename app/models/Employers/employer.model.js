@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose')
 
-const userSchema = new Schema({
+const recruiterSchema = new Schema({
     email: {
         type: String,
         required: (true, 'Email is required.'),
         unique: (true, 'Email already exists.')
     },
-    userName: {
+    employerName: {
         type: String,
         required: (true, 'User name is required.'),
         unique: (true, 'User name is already taken.')
@@ -38,9 +38,12 @@ const userSchema = new Schema({
             type: Boolean,
             default: false
         },
+        organization: {
+            type: Schema.Types.ObjectId, ref: 'organization',
+        },
         dateCreated: Date,
         dateUpdated: Date
     }
 })
 
-module.exports = UserModel = onphdb.model('user', userSchema);
+module.exports = EmployerModel = onphpartnersdb.model('employer', recruiterSchema);

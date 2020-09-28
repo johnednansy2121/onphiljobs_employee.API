@@ -20,7 +20,7 @@ const userProfileReviewSchema = new Schema({
     }
 });
 
-module.exports = UserProfileReviewModel = fllairdb.model('user.review', userProfileReviewSchema)
+module.exports = UserProfileReviewModel = onphdb.model('user.review', userProfileReviewSchema)
 
 //This model works a little different.
 /*

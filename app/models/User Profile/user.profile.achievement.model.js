@@ -26,4 +26,4 @@ const userProfileAchievementsSchema = new Schema({
 
 })
 
-module.exports = UserAchievementModel = fllairdb.model('user.achievement', userProfileAchievementsSchema)
+module.exports = UserAchievementModel = onphdb.model('user.achievement', userProfileAchievementsSchema)
