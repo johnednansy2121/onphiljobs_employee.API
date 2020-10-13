@@ -48,7 +48,7 @@ module.exports = function() {
         //     const userId = req.user._id
         //     UserProfileService.getMyProfile(userId)
         //         .then(response => resolve(res.json(Response.Success.Custom('Successfully retreive profile', response))))
-        //         .catch(error => reject(Response.Error.Custom(res, error.message)))
+        //         .catch(error => reject(Response.Error.Custom(res, userId)))
         // })
     })
 

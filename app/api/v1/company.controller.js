@@ -19,15 +19,15 @@ const companySchema = Joi.object({
 module.exports = function(){
     const baseRoute = basePath + 'company'
 
-    this.post(baseRoute + '/create-company', ValidatorRequest.validateRequest(companySchema), (req, res) => {
-        return new Promise((resolve, reject) => {
-            console.log(req.body)
-            const tag  = req.query.tag ? req.query.tag : ''
-            CompanyService.create({ ...req.body, tag })
-                .then(data => resolve(
-                    res.json(Response.Success.Custom('successfully created the company.', data
-                    ))))
-                .catch(error => reject(Response.Error.Custom(res, error.message)))
-        })
-    })
+    // this.post(baseRoute + '/create-company', ValidatorRequest.validateRequest(companySchema), (req, res) => {
+    //     return new Promise((resolve, reject) => {
+    //         console.log(req.body)
+    //         const tag  = req.query.tag ? req.query.tag : ''
+    //         CompanyService.create({ ...req.body, tag })
+    //             .then(data => resolve(
+    //                 res.json(Response.Success.Custom('successfully created the company.', data
+    //                 ))))
+    //             .catch(error => reject(Response.Error.Custom(res, error.message)))
+    //     })
+    // })
 }

@@ -23,7 +23,7 @@ module.exports = function(){
 
     this.post(baseRoute + '/signup', ValidatorRequest.validateRequest(signUpSchema), (req, res) => {
         return new Promise((resolve, reject) => {
-            console.log(req.body)
+            console.log(req.body + 'user controller signup body')
             const tag  = req.query.tag ? req.query.tag : ''
             UserService.signup({ ...req.body, tag })
                 .then(data => resolve(
@@ -54,7 +54,7 @@ module.exports = function(){
         return new Promise((resolve, reject) => {
             const { _id } = req.user
             UserService.getUserById(_id)
-                .then(result => resolve(res.json(Response.Success.Custom('Successfully retreive your user data.', result))))
+                .then(result => resolve(res.json(Response.Success.Custom('Successfully retrieved your user data.', result))))
                 .catch(error => reject(Response.Error.Custom(res, error.message)))
         })
     })

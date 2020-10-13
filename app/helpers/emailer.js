@@ -43,6 +43,13 @@ sendEmailAWS = ({ to, subject, message }) => {
 
 sendEmailGoogle = ({ to, subject, message }) => {
     let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        secureConnection: false,
+        port: 587,
+        tls: {
+            ciphers: 'SSLv3'
+        },
+        requireTLS: true,
         service: 'gmail',
         auth: {
             user: Configuration.GMAIL_USER,

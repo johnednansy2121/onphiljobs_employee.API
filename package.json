@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asonbuchanan/OT.FLLAIR.API.git"
+    "url": ""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/asonbuchanan/OT.FLLAIR.API/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/asonbuchanan/OT.FLLAIR.API#readme",
+  "homepage": "",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "aws-sdk": "^2.644.0",

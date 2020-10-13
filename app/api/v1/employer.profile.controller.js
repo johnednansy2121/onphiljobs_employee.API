@@ -33,7 +33,7 @@ const updateProfileSchema = Joi.object({
 })
 
 module.exports = function() {
-    const baseRoute = basePath + 'profile'
+    const baseRoute = basePath + 'employer-profile'
     const scope = 'profile'
 
     this.get(baseRoute, authorization(scope + '.get'), async(req, res) => {

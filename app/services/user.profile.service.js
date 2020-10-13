@@ -29,7 +29,7 @@ module.exports = UserProfileService = {
             return { 
                 successful: profileRes ? true : false,
                 model: profileRes,
-                message: 'Successfully retrieve record.'
+                message: 'Successfully retrieved record.'
             }
         } catch(err) {
             throw new Error(err.message)

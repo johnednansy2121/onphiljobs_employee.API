@@ -40,4 +40,4 @@ const companySchema = new Schema({
     }
 })
 
-module.exports = CompanyModel = onphdbpartners.model('company', companySchema);
+module.exports = CompanyModel = onphpartnersdb.model('company', companySchema);
