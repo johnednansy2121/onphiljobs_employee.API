@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-//const AWS = require('aws-sdk')
+const AWS = require('aws-sdk')
 const fs = require('fs')
 const path = require('path')
 const Mustache = require('mustache')
@@ -79,15 +79,14 @@ module.exports = EmailHelper = {
                 const { to, subject } = mailOptions
 
                 let rendered = Mustache.render(data, object)
-                // switch (Configuration.MAILING_TYPE.toString().toLowerCase()) {
-                //     case 'aws':
-                //         sendEmailAWS({ to, subject, message: rendered})
-                //         break
-                //    case 'google':
-                console.log(sendEmailGoogle({ to, subject, message: rendered }))
+                switch (Configuration.MAILING_TYPE.toString().toLowerCase()) {
+                    case 'aws':
+                        sendEmailAWS({ to, subject, message: rendered})
+                        break
+                   case 'google':
                         sendEmailGoogle({ to, subject, message: rendered })
-                //         break
-                // }
+                        break
+                }
             }
         })
     }

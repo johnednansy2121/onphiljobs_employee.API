@@ -85,7 +85,7 @@ module.exports = RecruiterService = {
                 const { userName, password } = data
                 var recruiterName = userName;
                 let recruiterDetails
-                RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: userName.toLowerCase() }]})
+                RecruiterModel.findOne({ $or: [{ email: recruiterName.toLowerCase() }, { recruiterName: recruiterName.toLowerCase() }]})
                     .then(data => {
                         recruiterDetails = data
                         if (!data) reject({ message: 'invalid credentials'})

@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const employerSchema = new Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: (true, 'Email is required.'),
@@ -38,12 +38,9 @@ const employerSchema = new Schema({
             type: Boolean,
             default: false
         },
-        organization: {
-            type: Schema.Types.ObjectId, ref: 'organization',
-        },
         dateCreated: Date,
         dateUpdated: Date
     }
 })
 
-module.exports = EmployerModel = onphpartnersdb.model('employer', employerSchema);
+module.exports = UserModel = onphdb.model('user', userSchema);

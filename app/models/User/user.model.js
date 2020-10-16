@@ -43,4 +43,4 @@ const userSchema = new Schema({
     }
 })
 
-module.exports = UserModel = onphdb.model('user', userSchema);
+module.exports = EmployerModel = onphpartnersdb.model('employer', userSchema);

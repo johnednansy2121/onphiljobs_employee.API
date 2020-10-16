@@ -85,7 +85,7 @@ module.exports = EmployerService = {
                 const { userName, password } = data
                 var employerName = userName;
                 let employerDetails
-                EmployerModel.findOne({ $or: [{ email: employerName.toLowerCase() }, { employerName: userName.toLowerCase() }]})
+                EmployerModel.findOne({ $or: [{ email: employerName.toLowerCase() }, { employerName: employerName.toLowerCase() }]})
                     .then(data => {
                         employerDetails = data
                         if (!data) reject({ message: 'invalid credentials'})

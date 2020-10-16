@@ -1,6 +1,6 @@
 const { basePath } = require('./apiConfig')
 const Response = require(basedir + '/helpers/responseMiddleware')
-const authorization = require(basedir + '/helpers/authorization')
+const authorization = require(basedir + '/helpers/employer-authorization')
 const ValidatorRequest = require(basedir + '/helpers/requestValidators')
 const Joi = require('@hapi/joi')
 const searchQueryBuilder = require('../../schemas/searchQueryBuilder')
@@ -38,6 +38,7 @@ module.exports = function() {
 
     this.get(baseRoute, authorization(scope + '.get'), async(req, res) => {
         try {
+            console.log(req.body);
             const result = await EmployerProfileService.getMyProfile(req.employer)
             res.status(200).json(result)
         } catch(err) {
