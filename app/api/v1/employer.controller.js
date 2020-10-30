@@ -1,6 +1,6 @@
 const { basePath } = require('./apiConfig')
 const Response = require(basedir + '/helpers/responseMiddleware')
-const authorization = require(basedir + '/helpers/authorization')
+const authorization = require(basedir + '/helpers/employer-authorization')
 const ValidatorRequest = require(basedir + '/helpers/requestValidators')
 const Joi = require('@hapi/joi')
 

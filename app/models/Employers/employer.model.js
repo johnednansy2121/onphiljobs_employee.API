@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 
-const recruiterSchema = new Schema({
+const employerSchema = new Schema({
     email: {
         type: String,
         required: (true, 'Email is required.'),
@@ -46,4 +46,4 @@ const recruiterSchema = new Schema({
     }
 })
 
-module.exports = EmployerModel = onphpartnersdb.model('employer', recruiterSchema);
+module.exports = EmployerModel = onphpartnersdb.model('employer', employerSchema);
