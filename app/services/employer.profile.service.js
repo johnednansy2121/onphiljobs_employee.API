@@ -21,10 +21,10 @@ module.exports = EmployerProfileService = {
         try {
             
             const profileRes = await EmployerProfileModel.findOne({ employer: employer._id })
-                .populate({
-                    path: 'premium.subscription',
-                    model: 'subscription'
-                })
+                // .populate({
+                //     path: 'premium.subscription',
+                //     model: 'subscription'
+                // })
 
             return { 
                 successful: profileRes ? true : false,
@@ -39,9 +39,11 @@ module.exports = EmployerProfileService = {
         return new Promise((resolve, reject) => {
             EmployerProfileModel.create({ employer: employer._id, firstName, lastName, aboutMe, displayPicture, videoUrl: getVideoId(videoUrl), socialLinks, privateCode: v4() , metadata: { dateCreated: new Date() }})
                 .then(profile => {
+                    console.log("PROFILE", profile)
                     return new Promise((resolve, reject) => {
                         EmployerModel.findById(employer._id)
                             .then(employer => {
+                                console.log("EMPLOYER", employer)
                                 EmployerModel.updateOne({ _id: employer._id },
                                     {
                                         $set: {
@@ -85,10 +87,10 @@ module.exports = EmployerProfileService = {
             })
 
             const updateProfile = await EmployerProfileModel.findOne({ _id, employer: employer._id })
-                .populate({
-                    path: 'premium.subscription',
-                    model: 'subscription'
-                })
+                // .populate({
+                //     path: 'premium.subscription',
+                //     model: 'subscription'
+                // })
             
             console.log(updateProfile)
             return updateProfile

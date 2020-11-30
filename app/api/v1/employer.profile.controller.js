@@ -48,6 +48,8 @@ module.exports = function() {
 
     this.post(baseRoute, authorization(scope + '.create'), ValidatorRequest.validateRequest(createProfileSchema), (req, res) => {
         return new Promise((resolve, reject) => {
+            console.log("req.body",req.body);
+            console.log("req.employer",req.employer);
             EmployerProfileService.create(req.body, req.employer)
                 .then(result => resolve(res.json(Response.Success.Custom('Successfully created profile', result))))
                 .catch(error => reject(Response.Error.Custom(res, error.message)))

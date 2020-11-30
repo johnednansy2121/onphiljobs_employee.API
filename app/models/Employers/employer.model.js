@@ -19,6 +19,16 @@ const employerSchema = new Schema({
         type: Boolean,
         default: false
     },
+    organizationId: {
+        type: Schema.Types.ObjectId,
+        ref: 'organization'
+    },
+    roles: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'role'
+        }
+    ],
     phone: {
         type: String,
         default: ''
@@ -37,9 +47,6 @@ const employerSchema = new Schema({
         hasProfile: {
             type: Boolean,
             default: false
-        },
-        organization: {
-            type: Schema.Types.ObjectId, ref: 'organization',
         },
         dateCreated: Date,
         dateUpdated: Date

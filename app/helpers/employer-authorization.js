@@ -2,10 +2,12 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (scope) => {
     return (req, res, next) => {
+        console.log("called")
         if(scope) {
             const authorization = req.headers.authorization
             if(authorization) {
                 const token = authorization.split(' ')[1]
+                console.log(token);
                 if (!token) res.status(401).json({ message: 'Bearer not found', successful: false })
                 else {
                     jwt.verify(token, Configuration.JWT_KEY, (error, decoded) => {
@@ -28,6 +30,7 @@ module.exports = (scope) => {
             } else
             res.status(401).json({ message: 'unauthorized access', successful: false })
         } else {
+            console.log(false)
             next()
         }
     }

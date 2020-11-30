@@ -53,7 +53,7 @@ module.exports = function(){
     this.get(baseRoute, authorization('employer'), (req, res) => {
         return new Promise((resolve, reject) => {
             const { _id } = req.employer
-            EmployerService.getUserById(_id)
+            EmployerService.getEmployerById(_id)
                 .then(result => resolve(res.json(Response.Success.Custom('Successfully retrieved your user data.', result))))
                 .catch(error => reject(Response.Error.Custom(res, error.message)))
         })
