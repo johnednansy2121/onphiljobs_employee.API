@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const employerProfileSchema = new Schema({
 
     //which recruiter owns this profile
-    recruiter: {
+    employer: {
         type: Schema.Types.ObjectId,
         ref: 'employer',
         unique: (true, 'Employer has already a profile.')
@@ -40,6 +40,17 @@ const employerProfileSchema = new Schema({
     },
     //Verification Status
     
+    // premium : {
+    //     hasProSubscription: {type: Boolean, default: false},        //Does this user have an active pro subscription
+
+    //     hasInterview: {type: Boolean, default: false},              //Has the user been interviewed by our consultants
+    //     interviewDate: {type: Date},                                //When was the interview conducted
+
+    //     isProfileVerified: {type: Boolean, default: false},         //(Unused) Have our consultants verified the claims this user makes
+    //     hasProofOfWorkingRights: {type: Boolean, default: false},   //(Unused) Has this user got proof of working rights (verified passport, verified drivers licence etc)
+    //     subscription: { type: Schema.Types.ObjectId, ref: 'subscription' }
+    // },
+
     //Recruiter Metadata
     metadata: {
         dateCreated: {type: Date},
@@ -47,4 +58,4 @@ const employerProfileSchema = new Schema({
     }
 })
 
-module.exports = EmployerProfileModel = onphpartnersdb.model('employer.profile', employerProfileSchema)
+module.exports = EmployerProfileModel = onphpartnersdb.model('employer.profiles', employerProfileSchema)

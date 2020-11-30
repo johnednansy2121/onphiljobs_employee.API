@@ -1,6 +1,6 @@
 const { basePath } = require('./apiConfig')
 const Response = require(basedir + '/helpers/responseMiddleware')
-const authorization = require(basedir + '/helpers/authorization')
+const authorization = require(basedir + '/helpers/employer-authorization')
 const ValidatorRequest = require(basedir + '/helpers/requestValidators')
 const Joi = require('@hapi/joi')
 const searchQueryBuilder = require('../../schemas/searchQueryBuilder')
@@ -33,7 +33,7 @@ const updateProfileSchema = Joi.object({
 })
 
 module.exports = function() {
-    const baseRoute = basePath + 'profile'
+    const baseRoute = basePath + 'employer-profile'
     const scope = 'profile'
 
     this.get(baseRoute, authorization(scope + '.get'), async(req, res) => {
@@ -47,6 +47,8 @@ module.exports = function() {
 
     this.post(baseRoute, authorization(scope + '.create'), ValidatorRequest.validateRequest(createProfileSchema), (req, res) => {
         return new Promise((resolve, reject) => {
+            console.log("req.body",req.body);
+            console.log("req.employer",req.employer);
             EmployerProfileService.create(req.body, req.employer)
                 .then(result => resolve(res.json(Response.Success.Custom('Successfully created profile', result))))
                 .catch(error => reject(Response.Error.Custom(res, error.message)))
