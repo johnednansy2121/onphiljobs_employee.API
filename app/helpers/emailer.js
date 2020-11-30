@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const AWS = require('aws-sdk')
+//const AWS = require('aws-sdk')
 const fs = require('fs')
 const path = require('path')
 const Mustache = require('mustache')
@@ -85,8 +85,8 @@ module.exports = EmailHelper = {
                         break
                    case 'google':
                         sendEmailGoogle({ to, subject, message: rendered })
-                        break
-                }
+                //         break
+                // }
             }
         })
     }
