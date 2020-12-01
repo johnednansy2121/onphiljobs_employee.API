@@ -54,4 +54,16 @@ module.exports = function() {
             res.status(400).json({ message: err.message })
         }
     })
-}
+
+    routes.put('/:id/publish', authorization('Job.Create'), async(req, res) => {
+        try {
+            const { id } = req.params
+    
+            const result = await JobService.publish(id, req.user)
+    
+            res.status(200).json({ message: 'Successfully published the job.', successful: true, model: true })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
