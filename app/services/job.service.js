@@ -123,9 +123,6 @@ module.exports = JobService = {
     },
     publish: async(jobId, employer) => {
         try {
-
-            const { client, title, subtitle, section, details, status, premium } = data
-
             const jobResult = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
 
             if(!jobResult) throw new Error(`Record not found with id of ${id}`)
@@ -144,6 +141,48 @@ module.exports = JobService = {
                 }
             })
     
+            return true
+        } catch(err) {
+            throw new Error(err.message)
+        }
+    },
+    drafts: async(jobId, employer) => {
+        try {
+            const jobDetails = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
+
+            if(!jobDetails) throw new Error('Record not found with id of ' + id)
+
+            jobDetails.metadata.dateUpdated = new Date()
+            await JobModel.update({ _id: id }, {
+                $set: {
+                    status: 'DRAFT',
+                    metadata: {
+                        ...jobDetails.metadata
+                    }
+                }
+            })
+
+            return true
+        } catch(err) {
+            throw new Error(err.message)
+        }
+    },
+    unlist: async(jobId, employer) => {
+        try {
+            const jobDetails = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
+
+            if(!jobDetails) throw new Error('Record not found with id of ' + id)
+
+            jobDetails.metadata.dateUpdated = new Date()
+            await JobModel.update({ _id: id }, {
+                $set: {
+                    status: 'UNLISTED',
+                    metadata: {
+                        ...jobDetails.metadata
+                    }
+                }
+            })
+
             return true
         } catch(err) {
             throw new Error(err.message)
