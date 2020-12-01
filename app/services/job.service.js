@@ -187,5 +187,52 @@ module.exports = JobService = {
         } catch(err) {
             throw new Error(err.message)
         }
+    },
+    edit: async(data, employer) => {
+        try {
+            await JobModel.ensureIndexes({ 'geoLocation': '2dsphere' })
+        
+            const searchJobDetails = await JobModel.findOne({ _id: data._id, 'metadata.organization': user.context })
+
+            if(!searchJobDetails) throw new Error('Job not found with id of ' + data._id)
+
+            const { client, title, subtitle, section, details, status, premium } = data
+
+            const geoLocation = {
+                type: 'Point',
+                coordinates: []
+            }
+
+            if(!details.isWorkFromHome) {
+             //@ts-ignore
+                geoLocation.coordinates = [ details.location.long, details.location.lat ]
+            }
+
+            await JobModel.update({ _id: data._id }, {
+                $set: {
+                    title,
+                    subtitle,
+                    section,
+                    details,
+                    status,
+                    premium,
+                    geoLocation,
+                    metadata: {
+                        dateUpdated: new Date(),
+                        client: client,
+                        createdBy: searchJobDetails.metadata.createdBy,
+                        dateCreated: new Date(searchJobDetails.metadata.dateCreated),
+                        organization: user.context,
+                        publishDate: searchJobDetails.metadata.publishDate ? new Date(searchJobDetails.metadata.publishDate) : new Date()
+                    }
+                }
+            })
+
+            const updatedJobDetails = await JobModel.findOne({ _id: data._id })
+
+            return updatedJobDetails;
+        } catch(err) {
+            throw new Error(err.message)
+        }
     }
 }

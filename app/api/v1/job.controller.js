@@ -93,4 +93,16 @@ module.exports = function() {
             res.status(400).json({ message: err.message })
         }
     })
+
+    this.put(baseRoute, authorization('Job.Create'), async(req, res) => {
+        try {
+            const result = await JobService.edit(req.body, req.user)
+    
+            res.status(200).json({ message: 'Successfully updated the job.', successful: true, model: true })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
 }
