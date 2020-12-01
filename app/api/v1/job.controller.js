@@ -17,6 +17,16 @@ module.exports = function() {
         }
     })
 
+    routes.post('', authorization('Job.Create'), async(req, res) => {
+        try {
+            const result = await JobService.create(req.body, req.user)
+    
+            res.status(200).json("Successfully created job", result)
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
     this.get(baseRoute + '/:id', async(req, res) => {
         try {
             const { id } = req.params
