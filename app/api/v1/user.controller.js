@@ -23,7 +23,6 @@ module.exports = function(){
 
     this.post(baseRoute + '/signup', ValidatorRequest.validateRequest(signUpSchema), (req, res) => {
         return new Promise((resolve, reject) => {
-            console.log(req.body + 'user controller signup body')
             const tag  = req.query.tag ? req.query.tag : ''
             UserService.signup({ ...req.body, tag })
                 .then(data => resolve(
