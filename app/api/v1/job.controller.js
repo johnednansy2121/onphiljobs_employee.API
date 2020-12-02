@@ -105,4 +105,90 @@ module.exports = function() {
         }
     })
 
+    this.get(baseRoute + '/:id/applicant/all', authorization('Job.Search'), async(req, res) => {
+        try {
+            const { id } = req.params
+        
+            const result = await ApplicationService.SearchByStatus(id, 'all', req.user)
+
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.get(baseRoute + '/:id/applicant/declined', authorization('Job.Search'), async(req, res) => {
+        try {
+            const { id } = req.params
+            
+            const result = await ApplicationService.SearchByStatus(id, 'declined', req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.get(baseRoute + '/:id/applicant/withdrawn', authorization('Job.Search'), async(req, res) => {
+        try {
+            const { id } = req.params
+            
+            const result = await ApplicationService.SearchByStatus(id, 'withdrawn', req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.get(baseRoute + '/:id/applicant/considering', authorization('Job.Search'), async(req, res) => {
+        try {
+            const { id } = req.params
+            
+            const result = await ApplicationService.SearchByStatus(id, 'considering', req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.get(baseRoute + '/:id/applicant/shortlist', authorization('Job.Search'), async(req, res) => {
+        try {
+            const { id } = req.params
+            
+            const result = await ApplicationService.SearchByStatus(id, 'shortlist', req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.post(baseRoute + '/:id/invites', authorization('Job.Search'), async(req, res) => {
+        try {
+            const result = await JobInviteService.Invite(req.body, req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
+
+    this.get('/:id/invites', authorization('Job.Search'), async(req, res) => {
+        try {
+            const result = await JobInviteService.SearchByJob(req.params.id, req.user)
+    
+            res.status(200).json({ message: 'Success.', successful: true, result: result })
+
+        } catch(err) {
+            res.status(400).json({ message: err.message })
+        }
+    })
 }

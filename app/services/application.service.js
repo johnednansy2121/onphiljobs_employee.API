@@ -84,5 +84,36 @@ module.exports = ApplicationService = {
         } catch(err) {
             throw new Error(err.message)
         }
+    },
+    SearchByStatus: async(applicationId, { _id }) => {
+        try {
+            const applicationDetails = await ApplicationModel.findById(applicationId)
+
+            if(!applicationDetails) throw new Error('Application not found with id of ' + applicationId)
+
+            const jobDetails = await JobModel.findOne({ _id: applicationDetails.job, 'metadata.organization': user.context })
+
+            if(!jobDetails) throw new Error('Job is not found with id of ' + applicationDetails.job)
+
+            applicationDetails.metadata.dateUpdated = new Date()
+            applicationDetails.metadata.updatedBy = user.id
+
+            await ApplicationModel.update({ _id: applicationId },{
+                $set: {
+                    status: status.toUpperCase(),
+                    metadata: {
+                        ...applicationDetails.metadata
+                    }
+                }
+            })
+
+            const updatedApplication = ApplicationModel.findById(applicationId)
+
+            return updatedApplication
+
+        } catch(err) {
+            throw new Error(err.message)
+        }
     }
+
 }
