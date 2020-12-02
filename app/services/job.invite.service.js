@@ -1,54 +1,55 @@
 module.exports = JobInviteService = {
-    invite: async({ filter, orderyBy, pageNum, pageSize }, { lat, long, distance }) => {
+    invite: async( data, user) => {
         try {
-            await JobModel.createIndexes({ 'geoLocation': '2dsphere' })
-            let jobIdsWithinArea = []
-            if((lat !== undefined && lat !== undefined) && (long !== undefined && long !== null) && (distance !== undefined && distance !== null)) {
-                const jobsWithinArea = await JobModel.find({
-                    geoLocation: {
-                        $geoWithin: {
-                            $centerSphere: [[long, lat], distance/3963.2 ]
-                        }
-                    }
-                })
-                jobIdsWithinArea = jobsWithinArea.map(x => x._id)
-            }
-            filter['status'] = 'PUBLISHED'
-            let totalItems = []
-            if(jobIdsWithinArea.length > 0) {
-                filter['_id'] = { $in: jobIdsWithinArea }
-            } 
-            totalItems = await JobModel.find(filter)
-            const offset = (pageNum - 1) * pageSize
-            let searchItems = []
-            if(orderyBy !== null) {
-                searchItems = await JobModel.find(filter).populate('metadata.organization').sort(orderyBy).skip(offset).limit(pageSize)
-            } else {
-                searchItems = await JobModel.find(filter).populate('metadata.organization').skip(offset).limit(pageSize)
-            }
+            const existingInvite = await ApplicationInviteModel.find({ applicantId: data.applicantId, jobId: data.jobId })
+
+            if(existingInvite.length > 0) throw new Error('Applicant is already invited to the job.')
+
+            const result = await ApplicationInviteModel.create({ applicantId: data.applicantId, jobId: data.jobId, status: 'PENDING', metadata: { 
+                user: user.id,
+                organization: user.context,
+                dateCreated: new Date()
+            }})
+
+            return result;
+        } catch(err) {
+            throw new Error(err.message)
+        }
+    },
+    SearchByJob: async( id, user) => {
+        try {
+            const inviteSearchItemsResult = await ApplicationInviteModel.find({ jobId, 'metadata.organization': user.context })
+
+            const applicantIds = inviteSearchItemsResult.map(item => item.applicantId)
+
+            const profiles = await FllairUserProfileModel.find({ user: { $in: applicantIds } }).populate('user')
+
             const list = []
-            searchItems.forEach(item => {
+
+            inviteSearchItemsResult.forEach((item) => {
+                const applicantProfile = profiles.filter((profile) => profile.user._id.toString() === item.applicantId.toString())[0]
+                
                 list.push({
                     _id: item._id,
-                    title: item.title,
-                    subtitle: item.subtitle,
-                    section: item.section,
-                    location: item.details.location,
-                    isFeatured: item.premium.isFeatured,
+                    status: item.status,
+                    jobId: item.jobId,
+                    applicant: {
+                        _id: applicantProfile._id,
+                        firstName: applicantProfile.firstName,
+                        lastName: applicantProfile.lastName,
+                        userName: applicantProfile.user.userName,
+                        premium: {
+                            hasProSubscription: applicantProfile.premium.hasProSubscription
+                        }
+                    },
                     metadata: {
-                        publishedDate: item.metadata.publishDate,
-                        organization: item.metadata.organization.name
+                        dateCreated: item.metadata.dateCreated,
+                        dateUpdated: item.metadata.dateUpdated
                     }
                 })
             })
-            return {
-                items: list,
-                totalItems: totalItems.length,
-                pageSize: pageSize,
-                pageNum: pageNum,
-                message: 'Successfully retrieve records.',
-                successful: true
-            }
+
+            return list
         } catch(err) {
             throw new Error(err.message)
         }
