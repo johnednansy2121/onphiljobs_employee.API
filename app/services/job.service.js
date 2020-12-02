@@ -91,12 +91,12 @@ module.exports = JobService = {
             throw new Error(err.message)
         }
     },
-    create: async(data, employer) => {
+    create: async(data, user) => {
         try {
 
             const { client, title, subtitle, section, details, status, premium } = data
 
-            const checkEmployer = await EmployerModel.find({ name: employer._id })
+            const checkEmployer = await EmployerModel.find({ name: user._id })
 
             if(checkEmployer.length >= 1) throw new Error('Failed fetching Employer details.')
 
@@ -121,7 +121,7 @@ module.exports = JobService = {
             throw new Error(err.message)
         }
     },
-    publish: async(jobId, employer) => {
+    publish: async(id, user) => {
         try {
             const jobResult = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
 
@@ -146,7 +146,7 @@ module.exports = JobService = {
             throw new Error(err.message)
         }
     },
-    drafts: async(jobId, employer) => {
+    drafts: async(id, user) => {
         try {
             const jobDetails = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
 
@@ -167,7 +167,7 @@ module.exports = JobService = {
             throw new Error(err.message)
         }
     },
-    unlist: async(jobId, employer) => {
+    unlist: async(id, user) => {
         try {
             const jobDetails = await JobModel.findOne({ _id: id, 'metadata.organization': user.context })
 
@@ -188,7 +188,7 @@ module.exports = JobService = {
             throw new Error(err.message)
         }
     },
-    edit: async(data, employer) => {
+    edit: async(data, user) => {
         try {
             await JobModel.ensureIndexes({ 'geoLocation': '2dsphere' })
         
