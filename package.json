@@ -38,7 +38,7 @@
     "mongoose": "^5.9.4",
     "mustache": "^4.0.1",
     "node-2fa": "^1.1.2",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.16",
     "nodemon": "^2.0.2",
     "odata-v4-mongodb": "^0.1.12",
     "stripe": "^8.44.0",
